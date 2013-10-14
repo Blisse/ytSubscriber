@@ -58,8 +58,11 @@ namespace ytSubscriber
         private void UploadersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var uploaderListBox = sender as ListBox;
-            var selectedUploaders = uploaderListBox.SelectedItems as IList;
-            MainViewModel.FilterSubscriptionList(selectedUploaders);
+            if (uploaderListBox != null)
+            {
+                var selectedUploaders = uploaderListBox.SelectedItems as IList;
+                MainViewModel.FilterSubscriptionList(selectedUploaders);
+            }
         }
     }
 }

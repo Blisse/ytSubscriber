@@ -211,13 +211,17 @@ namespace ytSubscriber.ViewModels
 
         public void FilterSubscriptionList(IList uploaders)
         {
-            FilteredSubscriptionList.Clear();
-
-            var filteredList = SubscriptionList.Where(x => !uploaders.Contains(x.Uploader));
-            foreach (var subItem in filteredList)
+            if (uploaders != null)
             {
-                FilteredSubscriptionList.Add(subItem);
+                FilteredSubscriptionList.Clear();
+
+                var filteredList = SubscriptionList.Where(x => !uploaders.Contains(x.Uploader));
+                foreach (var subItem in filteredList)
+                {
+                    FilteredSubscriptionList.Add(subItem);
+                }
             }
+
         }
 
         /// <summary>
