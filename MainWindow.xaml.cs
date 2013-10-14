@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using ytSubscriber.ViewModels;
+using System.Collections;
 
 namespace ytSubscriber
 {
@@ -52,6 +53,13 @@ namespace ytSubscriber
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
+        }
+
+        private void UploadersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var uploaderListBox = sender as ListBox;
+            var selectedUploaders = uploaderListBox.SelectedItems as IList;
+            MainViewModel.FilterSubscriptionList(selectedUploaders);
         }
     }
 }

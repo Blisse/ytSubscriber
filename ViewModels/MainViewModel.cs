@@ -1,8 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using GalaSoft.MvvmLight;
 using ytSubscriber.Models;
+using System.Collections;
 
 namespace ytSubscriber.ViewModels
 {
@@ -21,7 +23,6 @@ namespace ytSubscriber.ViewModels
     public class MainViewModel : ViewModelBase
     {
         public const string FileNameDataPropertyKey = "FileNameDataProperty";
-
         private String _fileName = "";
         public String FileName
         {
@@ -44,8 +45,8 @@ namespace ytSubscriber.ViewModels
         }
 
         public const string SubscriptionListDataPropertyKey = "SubscriptionListDataProperty";
-        private ObservableCollection<SubscriptionItem> _subscriptionList = new ObservableCollection<SubscriptionItem>();
-        public ObservableCollection<SubscriptionItem> SubscriptionList
+        private Collection<SubscriptionItem> _subscriptionList = new Collection<SubscriptionItem>();
+        public Collection<SubscriptionItem> SubscriptionList
         {
             get
             {
@@ -63,7 +64,49 @@ namespace ytSubscriber.ViewModels
                 RaisePropertyChanged(SubscriptionListDataPropertyKey);
             }
         }
-        
+
+        public const string FilteredSubscriptionListDataPropertyKey = "FilteredSubscriptionListDataProperty";
+        private ObservableCollection<SubscriptionItem> _filteredSubscriptionList = new ObservableCollection<SubscriptionItem>();
+        public ObservableCollection<SubscriptionItem> FilteredSubscriptionList
+        {
+            get
+            {
+                return _filteredSubscriptionList;
+            }
+            set
+            {
+                if (_filteredSubscriptionList == value)
+                {
+                    return;
+                }
+
+                RaisePropertyChanging(FilteredSubscriptionListDataPropertyKey);
+                _filteredSubscriptionList = value;
+                RaisePropertyChanged(FilteredSubscriptionListDataPropertyKey);
+            }
+        }
+
+        public const string UploaderListDataPropertyKey = "UploaderListDataProperty";
+        private ObservableCollection<String> _uploaderList = new ObservableCollection<String>();
+        public ObservableCollection<String> UploaderList
+        {
+            get
+            {
+                return _uploaderList;
+            }
+            set
+            {
+                if (_uploaderList == value)
+                {
+                    return;
+                }
+
+                RaisePropertyChanging(UploaderListDataPropertyKey);
+                _uploaderList = value;
+                RaisePropertyChanged(UploaderListDataPropertyKey);
+            }
+        }
+
         private void GetSubscriptionData()
         {
             SubscriptionList.Clear();
@@ -145,6 +188,35 @@ namespace ytSubscriber.ViewModels
                         SubscriptionList.Add(subItem);
                     }
                 }
+            }
+
+            GetUploaderData();
+
+            foreach (var subItem in SubscriptionList)
+            {
+                FilteredSubscriptionList.Add(subItem);
+            }
+        }
+
+        private void GetUploaderData()
+        {
+            UploaderList.Clear();
+
+            var uploaders = SubscriptionList.Select(x => x.Uploader).Distinct();
+            foreach (var uploader in uploaders)
+            {
+                UploaderList.Add(uploader);
+            }
+        }
+
+        public void FilterSubscriptionList(IList uploaders)
+        {
+            FilteredSubscriptionList.Clear();
+
+            var filteredList = SubscriptionList.Where(x => !uploaders.Contains(x.Uploader));
+            foreach (var subItem in filteredList)
+            {
+                FilteredSubscriptionList.Add(subItem);
             }
         }
 
