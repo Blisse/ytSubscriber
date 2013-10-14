@@ -30,6 +30,7 @@ namespace ytSubscriber
         {
             InitializeComponent();
             MainViewModel = DataContext as MainViewModel;
+            FileNameTextBlock.Text = "No file loaded";
         }
 
         private void OpenFileDialog_OnClick(object sender, RoutedEventArgs e)
@@ -40,6 +41,10 @@ namespace ytSubscriber
             {
                 MainViewModel.FileName = dlg.FileName;
                 FileNameTextBlock.Text = dlg.FileName;
+            }
+            else
+            {
+                FileNameTextBlock.Text = "No file loaded";
             }
         }
 
