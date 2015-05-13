@@ -37,10 +37,9 @@ namespace ytSubscriber.ViewModels
                     return;
                 }
 
-                RaisePropertyChanging(FileNameDataPropertyKey);
                 _fileName = value;
                 GetSubscriptionData();
-                RaisePropertyChanged(FileNameDataPropertyKey);
+                RaisePropertyChanged();
             }
         }
 
@@ -59,9 +58,8 @@ namespace ytSubscriber.ViewModels
                     return;
                 }
 
-                RaisePropertyChanging(SubscriptionListDataPropertyKey);
                 _subscriptionList = value;
-                RaisePropertyChanged(SubscriptionListDataPropertyKey);
+                RaisePropertyChanged();
             }
         }
 
@@ -80,9 +78,8 @@ namespace ytSubscriber.ViewModels
                     return;
                 }
 
-                RaisePropertyChanging(FilteredSubscriptionListDataPropertyKey);
                 _filteredSubscriptionList = value;
-                RaisePropertyChanged(FilteredSubscriptionListDataPropertyKey);
+                RaisePropertyChanged();
             }
         }
 
@@ -101,9 +98,8 @@ namespace ytSubscriber.ViewModels
                     return;
                 }
 
-                RaisePropertyChanging(UploaderListDataPropertyKey);
                 _uploaderList = value;
-                RaisePropertyChanged(UploaderListDataPropertyKey);
+                RaisePropertyChanged();
             }
         }
 
