@@ -191,7 +191,7 @@ namespace ytSubscriber.ViewModels
             foreach (var subItem in SubscriptionList)
             {
                 FilteredSubscriptionList.Add(subItem);
-            }
+            } 
         }
 
         private void GetUploaderData()

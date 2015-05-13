@@ -17,6 +17,7 @@ using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using ytSubscriber.ViewModels;
 using System.Collections;
+using ytSubscriber.Models;
 
 namespace ytSubscriber
 {
@@ -36,17 +37,20 @@ namespace ytSubscriber
 
         private void OpenFileDialog_OnClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new OpenFileDialog();
-            var selected = dlg.ShowDialog();
-            if (selected == true)
-            {
-                MainViewModel.FileName = dlg.FileName;
-                FileNameTextBlock.Text = dlg.FileName;
-            }
-            else
-            {
-                FileNameTextBlock.Text = "No file loaded";
-            }
+            YoutubeApi api = new YoutubeApi();
+            api.OAuthConnect();
+
+//            var dlg = new OpenFileDialog();
+//            var selected = dlg.ShowDialog();
+//            if (selected == true)
+//            {
+//                MainViewModel.FileName = dlg.FileName;
+//                FileNameTextBlock.Text = dlg.FileName;
+//            }
+//            else
+//            {
+//                FileNameTextBlock.Text = "No file loaded";
+//            }
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
